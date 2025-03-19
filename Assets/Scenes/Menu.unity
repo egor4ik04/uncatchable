@@ -443,7 +443,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6176067869595424976, guid: f61dd94a311699d46b2cf88c49918e28, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7098443197324652977, guid: f61dd94a311699d46b2cf88c49918e28, type: 3}
       propertyPath: m_LocalPosition.x
@@ -914,7 +914,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6176067869595424976, guid: f61dd94a311699d46b2cf88c49918e28, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7098443197324652977, guid: f61dd94a311699d46b2cf88c49918e28, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3101,16 +3101,12 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 6200000, guid: 94ca6f893eb68df42b591390bbb8457c, type: 2}
     - target: {fileID: 1167179948996779913, guid: f61dd94a311699d46b2cf88c49918e28, type: 3}
-      propertyPath: IsControllable
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1167179948996779913, guid: f61dd94a311699d46b2cf88c49918e28, type: 3}
       propertyPath: isControllable
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2431446081272969468, guid: f61dd94a311699d46b2cf88c49918e28, type: 3}
       propertyPath: IsRandomized
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5729988357012794677, guid: f61dd94a311699d46b2cf88c49918e28, type: 3}
       propertyPath: m_Material
@@ -3172,10 +3168,6 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 7715488954849825023, guid: f61dd94a311699d46b2cf88c49918e28, type: 3}
-      propertyPath: particlePrefab
-      value: 
-      objectReference: {fileID: 7389161195557327990, guid: fcd08d00d63b2a5448c21d13706f00ce, type: 3}
     - target: {fileID: 7715488954849825023, guid: f61dd94a311699d46b2cf88c49918e28, type: 3}
       propertyPath: particlesContainer
       value: 

@@ -237,3 +237,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e860665f21be744e928dd2505b612b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  particlePrefab: {fileID: 7389161195557327990, guid: fcd08d00d63b2a5448c21d13706f00ce, type: 3}
+  particlesContainer: {fileID: 0}
+  spawnTick: 0.2
+  lifeTime: 1.2
