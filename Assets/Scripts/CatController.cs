@@ -8,16 +8,24 @@ public class CatController : MonoBehaviour
 {
     [SerializeField] private float speed;
     [SerializeField] private float currentVelocity;
+    public float Velocity { get => currentVelocity; }
     [SerializeField] private CatOptions catOptions;
     [SerializeField] public bool IsControllable;
     [SerializeField] private float dashSpeed = 10f;
     [SerializeField] private float dashDuration = 0.2f;
     [SerializeField] private bool isDashing = false;
+    public bool IsDashing { get => isDashing; }
+    [SerializeField] public bool IsLaying = false;
     [SerializeField] private bool canDash = false;
+    [SerializeField] private bool canMove = false;
     private float lastClickTime = 0f;
     [SerializeField] private float doubleClickTime = 0.3f;
     [SerializeField] private Vector2 lastClickPosition;
+    public Vector2 LastClickPosition { get => lastClickPosition; }
     [SerializeField] private float dashCD = 1f;
+    private int layCDCounter = 0;
+    private readonly int isLayingAnimatorProperty = Animator.StringToHash("isLaying");
+    private readonly int velocityAnimatorProperty = Animator.StringToHash("velocity");
 
     SpriteRenderer spriteRenderer;
     Animator animator;
@@ -33,6 +41,7 @@ public class CatController : MonoBehaviour
         catOptions.OnIndexChanged -= CatChanged;
         catOptions.OnIndexChanged += CatChanged;
         canDash = true;
+        canMove = true;
     }
 
     private void Update()
@@ -42,28 +51,39 @@ public class CatController : MonoBehaviour
             Vector2 currentClickPosition = Camera.main.ScreenToViewportPoint(Input.mousePosition);
             if (!isDashing)
             {
-                if (Input.GetMouseButtonUp(0))
+                bool isMouse1Click = Input.GetMouseButton(0);
+                if (currentClickPosition.y > 0.6f)
                 {
-                    if (Time.time - lastClickTime < doubleClickTime && Mathf.Abs(currentClickPosition.x - 0.5f) > 0.1f && Mathf.Abs(lastClickPosition.x - 0.5f) > 0.1f)
+                    if (!IsLaying)
                     {
-                        if (canDash && (currentClickPosition.x - 0.5f < 0) == (lastClickPosition.x - 0.5f < 0))
-                        {
-                            StartCoroutine(Dash(currentClickPosition.x - 0.5f > 0 ? 1 : -1));
-                        }
+                        canMove = false;
+                        StopAllCoroutines();
+                        //StopCoroutine(layToMoveCD());
+                        StartCoroutine(layToMoveCD());
                     }
-                    lastClickTime = Time.time; 
-                    lastClickPosition = currentClickPosition;
-                }
-                if (Input.GetMouseButton(0))
-                {
-                    Vector2 pos = Camera.main.ScreenToViewportPoint(Input.mousePosition);
-                    currentVelocity = Mathf.Clamp01(pos.x) * 2 - 1;
-                    Move(currentVelocity);
+                    IsLaying = isMouse1Click; 
+                    currentVelocity = 0;
                 }
                 else
                 {
-                    currentVelocity = 0;
-                }
+                    IsLaying = false;
+                    if (canMove && Input.GetMouseButtonUp(0))
+                    {
+                        if (Time.time - lastClickTime < doubleClickTime && Mathf.Abs(currentClickPosition.x - 0.5f) > 0.1f && Mathf.Abs(lastClickPosition.x - 0.5f) > 0.1f)
+                            if (canDash && (currentClickPosition.x - 0.5f < 0) == (lastClickPosition.x - 0.5f < 0))
+                                StartCoroutine(Dash(currentClickPosition.x - 0.5f > 0 ? 1 : -1));
+                        lastClickTime = Time.time;
+                        lastClickPosition = currentClickPosition;
+                    }
+                    if (canMove && isMouse1Click)
+                    {
+                        Vector2 pos = Camera.main.ScreenToViewportPoint(Input.mousePosition);
+                        currentVelocity = Mathf.Clamp01(pos.x) * 2 - 1;
+                        Move(currentVelocity);
+                    }
+                    else
+                        currentVelocity = 0;
+                }                
             }
         }
         AnimCalculate();
@@ -120,23 +140,47 @@ public class CatController : MonoBehaviour
     private void AnimCalculate()
     {
         IAnimType calculated;
-        if (Mathf.Abs(currentVelocity) >= 0.05f)
+        if (IsLaying)
         {
-            if (Mathf.Abs(currentVelocity) < 0.5f)
-                calculated = IAnimType.walk;
-            else
-                calculated = IAnimType.run;
-            animator.speed = Mathf.Abs(currentVelocity) * 2;
-            spriteRenderer.flipX = currentVelocity < 0;
-        } else {
-            calculated = IAnimType.idle;
+            calculated = IAnimType.lay;
             animator.speed = 1;
         }
+        else
+        {
+            if (Mathf.Abs(currentVelocity) >= 0.05f)
+            {
+                if (Mathf.Abs(currentVelocity) < 0.5f)
+                    calculated = IAnimType.walk;
+                else
+                    calculated = IAnimType.run;
+                animator.speed = Mathf.Abs(currentVelocity) * 2;
+                spriteRenderer.flipX = currentVelocity < 0;
+            }
+            else
+            {
+                calculated = IAnimType.idle;
+                animator.speed = 1;
+            }
+        }
+        animator.SetBool(isLayingAnimatorProperty, IsLaying);
+        animator.SetFloat(velocityAnimatorProperty, Mathf.Abs(currentVelocity));
         if (calculated != currentAnim)
         {
             currentAnim = calculated;
-            animator.Play(AnimationManager.GetAnimName(currentAnim));
+            //animator.Play(AnimationManager.GetAnimName(currentAnim));
         }
     }
-        
+    private IEnumerator layToMoveCD()
+    {
+        yield return null;
+        while (IsLaying)
+            yield return null;
+        yield return new WaitForSeconds(1f);
+        if (!IsLaying)
+        {
+            canMove = true; 
+            canDash = true;
+            spriteRenderer.color = Color.white;
+        }
+    }
 }

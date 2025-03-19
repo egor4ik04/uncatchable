@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 4845154609955101093}
   - component: {fileID: 1167179948996779913}
   - component: {fileID: 2431446081272969468}
+  - component: {fileID: 7715488954849825023}
   m_Layer: 0
   m_Name: Cat
   m_TagString: Player
@@ -54,6 +55,9 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -91,7 +95,7 @@ SpriteRenderer:
   m_SpriteSortPoint: 0
 --- !u!50 &5729988357012794677
 Rigidbody2D:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -102,8 +106,8 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
   m_GravityScale: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -124,6 +128,7 @@ CapsuleCollider2D:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6176067869595424976}
   m_Enabled: 1
+  serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 6200000, guid: 94ca6f893eb68df42b591390bbb8457c, type: 2}
   m_IncludeLayers:
@@ -147,13 +152,14 @@ CapsuleCollider2D:
     m_Bits: 4294967295
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_UsedByComposite: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0.05}
   m_Size: {x: 1, y: 1}
   m_Direction: 0
 --- !u!95 &4845154609955101093
 Animator:
-  serializedVersion: 5
+  serializedVersion: 7
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -167,6 +173,7 @@ Animator:
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
@@ -188,6 +195,15 @@ MonoBehaviour:
   currentVelocity: 0
   catOptions: {fileID: 11400000, guid: 0fb4d6e2c8f337942b592df76dc13fab, type: 2}
   IsControllable: 0
+  dashSpeed: 10
+  dashDuration: 0.2
+  isDashing: 0
+  IsLaying: 0
+  canDash: 0
+  canMove: 0
+  doubleClickTime: 0.3
+  lastClickPosition: {x: 0, y: 0}
+  dashCD: 1
 --- !u!114 &2431446081272969468
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -209,3 +225,15 @@ MonoBehaviour:
   minMoveDuration: 0.2
   maxMoveDuration: 2
   IsRandomized: 0
+--- !u!114 &7715488954849825023
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6176067869595424976}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e860665f21be744e928dd2505b612b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

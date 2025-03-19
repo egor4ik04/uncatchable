@@ -1,4 +1,4 @@
 ﻿public enum IAnimType
 {
-    idle, walk, run
+    idle, walk, run, lay
 }
