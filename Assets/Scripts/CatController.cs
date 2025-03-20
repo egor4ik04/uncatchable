@@ -23,7 +23,7 @@ public class CatController : MonoBehaviour
     [SerializeField] private Vector2 lastClickPosition;
     public Vector2 LastClickPosition { get => lastClickPosition; }
     [SerializeField] private float dashCD = 1f;
-    private int layCDCounter = 0;
+    //private int layCDCounter = 0;
     private readonly int isLayingAnimatorProperty = Animator.StringToHash("isLaying");
     private readonly int velocityAnimatorProperty = Animator.StringToHash("velocity");
 
