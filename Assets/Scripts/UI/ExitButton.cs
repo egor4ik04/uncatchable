@@ -1,3 +1,4 @@
+using UnityEditor;
 using UnityEngine;
 
 [RequireComponent(typeof(ButtonClicked))]
@@ -12,5 +13,10 @@ public class ExitButton : MonoBehaviour
         buttonController.OnClickUp += ExitClicked;
     }
 
-    private void ExitClicked() => Application.Quit();
+    private void ExitClicked() =>
+#if UNITY_EDITOR
+        EditorApplication.ExitPlaymode();
+#else
+        Application.Quit();
+#endif
 }
